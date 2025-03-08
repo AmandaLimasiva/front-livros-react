@@ -10,8 +10,8 @@ import styles from '../styles/content.module.css'
 export function Content() {
   const [repositories, setRepositories] = useState([])
   const [nome, setNome] = useState('')
-  const [minibio, setminibio] = useState('')
-  const [citacao, setCitacao] = useState('')
+  const [quantPag, setQuantPag] = useState('')  // Alterado de minibio para quantPag
+  const [resenha, setResenha] = useState('')  // Alterado de citacao para resenha
   const [imagem, setImagem] = useState('')
   const [success, setSuccess] = useState(false)
   const baseURL = 'https://back-end-85oy.onrender.com/livros'
@@ -28,40 +28,41 @@ export function Content() {
     setNome(event.target.value)
   }
 
-  function handleInputValueminibio(event) {
-    setminibio(event.target.value)
+  function handleInputValueQuantPag(event) {
+    setQuantPag(event.target.value)  // Atualizado para refletir quantPag
   }
 
   function handleInputValueImagem(event) {
     setImagem(event.target.value)
   }
 
-  function handleInputValueCitacao(event) {
-    setCitacao(event.target.value)
+  function handleInputValueResenha(event) {
+    setResenha(event.target.value)  // Atualizado para refletir resenha
   }
 
-  function handleCreateMessage(event) {
+  async function handleCreateMessage(event) {
     event.preventDefault()
 
-    console.log('mensagem enviada', nome, citacao, minibio, imagem)
+    console.log('Cadastro enviado', nome, quantPag, resenha, imagem)
 
-    async function sendData() {
+    try {
       await Axios.post(baseURL, {
         nome: nome,
-        citacao: citacao,
-        minibio: minibio,
+        quantPag: quantPag,  // Enviado corretamente como quantPag
+        resenha: resenha,  // Enviado corretamente como resenha
         imagem: imagem
       })
       const response = await Axios.get(baseURL)
       setRepositories(response.data)
-    }
-    sendData()
 
-    setSuccess(true)
-    setNome('')
-    setminibio('')
-    setImagem('')
-    setCitacao('')
+      setSuccess(true)
+      setNome('')
+      setQuantPag('')
+      setImagem('')
+      setResenha('')
+    } catch (error) {
+      console.error('Erro ao cadastrar:', error)
+    }
   }
 
   return (
@@ -72,55 +73,51 @@ export function Content() {
         image={listaImg}
       />
       <div className={styles.projectsContainer}>
-        <div className={styles.projectsContainer}>
-          <div className={styles.cardsRepoContainer}>
-            {repositories.map((repo) => {
-              return(
-                <div key={repo._id} className={styles.cardRepo}>
-                <div className={styles.cardImgContainer}>
-                  <img className={styles.cardRepoImage} src={repo.imagem} />
-                </div>
-                <details>
-                  <summary className={styles.cardRepoSummary}>
-                    {repo.nome}
-                  </summary>
-                  <p className={styles.cardRepoText}>{repo.minibio}</p>
-                  <q className={styles.cardRepoQuote}>{repo.citacao}</q>
-                </details>
+        <div className={styles.cardsRepoContainer}>
+          {repositories.map((repo) => (
+            <div key={repo._id} className={styles.cardRepo}>
+              <div className={styles.cardImgContainer}>
+                <img className={styles.cardRepoImage} src={repo.imagem} />
               </div>
-              )
-            })}
-          </div>
+              <details>
+                <summary className={styles.cardRepoSummary}>
+                  {repo.nome}
+                </summary>
+                <p className={styles.cardRepoText}>Páginas: {repo.quantPag}</p>
+                <q className={styles.cardRepoQuote}>{repo.resenha}</q>
+              </details>
+            </div>
+          ))}
         </div>
       </div>
-      <div >
+      <div>
         <h2 className={styles.projectsTitle}>Cadastre uma rainha tech:</h2>
-        <form  className={styles.form} onSubmit={handleCreateMessage}>
+        <form className={styles.form} onSubmit={handleCreateMessage}>
           <input 
             onChange={handleInputValueNome} 
             placeholder="Digite o nome"
             value={nome}
             className={styles.formInput}
           />
-          <textarea 
+          <input 
             onChange={handleInputValueImagem} 
             placeholder="Digite o link da imagem"
             value={imagem}
-            className={styles.formTextArea}
+            className={styles.formInput}
+          />
+          <input 
+            onChange={handleInputValueQuantPag} 
+            placeholder="Digite a quantidade de páginas"
+            value={quantPag}
+            className={styles.formInput}
           />
           <textarea 
-            onChange={handleInputValueminibio} 
-            placeholder="Digite a minibiografia"
-            value={minibio}
+            onChange={handleInputValueResenha} 
+            placeholder="Digite a resenha"
+            value={resenha}
             className={styles.formTextArea}
           />
-          <textarea 
-            onChange={handleInputValueCitacao} 
-            placeholder="Digite a citação"
-            value={citacao}
-            className={styles.formTextArea}
-          />
-          <button className={styles.formButton} type="submit">Enviar mensagem</button>
+          <button className={styles.formButton} type="submit">Enviar</button>
           {success && <p>Cadastro realizado com sucesso.</p>}
         </form>
       </div>
