@@ -23,13 +23,15 @@ export function Modal({ isOpen, onClose, repo, onEdit, onDelete }) {
           <p>Páginas: {repo.quantPag}</p>
           <q>Sobre o Livro: {repo.resenha}</q>
         </div>
+        {/* Botões de Editar e Excluir */}
+        <div className={styles.modalActions}>  {/* Aqui é a classe para mexer no Css*/}
+            <p>Ações</p>
+            <button onClick={handleEdit} className={styles.editButton}>Editar</button>
+            <button onClick={handleDelete} className={styles.deleteButton}>Excluir</button>
+        </div>
+        </div>  
       </div>
 
-      {/* Botões de Editar e Excluir */}
-      <div className={styles.modalActions}>
-        <button onClick={handleEdit} className={styles.editButton}>Editar</button>
-        <button onClick={handleDelete} className={styles.deleteButton}>Excluir</button>
-      </div>
-    </div>
+
   );
 }
