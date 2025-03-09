@@ -2,18 +2,19 @@ import { useState, useEffect } from 'react'
 import listaImg from '../assets/lista.svg'
 import { Header } from './Header.jsx'
 import { Footer } from './Footer.jsx'
-
+import { Modal } from './Modal.jsx'
 import Axios from 'axios'
-
 import styles from '../styles/content.module.css'
 
 export function Content() {
   const [repositories, setRepositories] = useState([])
   const [nome, setNome] = useState('')
-  const [quantPag, setQuantPag] = useState('')  // Alterado de minibio para quantPag
-  const [resenha, setResenha] = useState('')  // Alterado de citacao para resenha
+  const [quantPag, setQuantPag] = useState('')
+  const [resenha, setResenha] = useState('')
   const [imagem, setImagem] = useState('')
   const [success, setSuccess] = useState(false)
+  const [modalOpen, setModalOpen] = useState(false)
+  const [selectedRepo, setSelectedRepo] = useState(null)
   const baseURL = 'https://back-end-85oy.onrender.com/livros'
 
   useEffect(() => {
@@ -29,7 +30,7 @@ export function Content() {
   }
 
   function handleInputValueQuantPag(event) {
-    setQuantPag(event.target.value)  // Atualizado para refletir quantPag
+    setQuantPag(event.target.value)
   }
 
   function handleInputValueImagem(event) {
@@ -37,7 +38,17 @@ export function Content() {
   }
 
   function handleInputValueResenha(event) {
-    setResenha(event.target.value)  // Atualizado para refletir resenha
+    setResenha(event.target.value)
+  }
+
+  function openModal(repo) {
+    setSelectedRepo(repo)
+    setModalOpen(true)
+  }
+
+  function closeModal() {
+    setModalOpen(false)
+    setSelectedRepo(null)
   }
 
   async function handleCreateMessage(event) {
@@ -47,10 +58,10 @@ export function Content() {
 
     try {
       await Axios.post(baseURL, {
-        nome: nome,
-        quantPag: quantPag,  // Enviado corretamente como quantPag
-        resenha: resenha,  // Enviado corretamente como resenha
-        imagem: imagem
+        nome,
+        quantPag,
+        resenha,
+        imagem
       })
       const response = await Axios.get(baseURL)
       setRepositories(response.data)
@@ -68,30 +79,32 @@ export function Content() {
   return (
     <>
       <Header
-        title='Mulheres em Tech Brasil'
-        subtitle='Conheça personalidades femininas que estão transformando a tecnologia no Brasil'
-        image={listaImg}
+        title='Meus livros favoritos'
+        subtitle='Ficha técnica dos livros'
+        image={listaImg} // Se precisar alterar, faça aqui
       />
+
       <div className={styles.projectsContainer}>
         <div className={styles.cardsRepoContainer}>
           {repositories.map((repo) => (
-            <div key={repo._id} className={styles.cardRepo}>
+            <div key={repo._id} className={styles.cardRepo} onClick={() => openModal(repo)}>
               <div className={styles.cardImgContainer}>
-                <img className={styles.cardRepoImage} src={repo.imagem} />
+                <img className={styles.cardRepoImage} src={repo.imagem} alt={repo.nome} />
               </div>
-              <details>
-                <summary className={styles.cardRepoSummary}>
-                  {repo.nome}
-                </summary>
-                <p className={styles.cardRepoText}>Páginas: {repo.quantPag}</p>
-                <q className={styles.cardRepoQuote}>{repo.resenha}</q>
-              </details>
+              <h3 className={styles.cardRepoSummary}>{repo.nome}</h3>
             </div>
           ))}
         </div>
       </div>
+
+      {/* Modal */}
+      {selectedRepo && (
+        <Modal isOpen={modalOpen} onClose={closeModal} repo={selectedRepo} />
+      )}
+
+      {/* Formulário de Cadastro */}
       <div>
-        <h2 className={styles.projectsTitle}>Cadastre uma rainha tech:</h2>
+        <h2 className={styles.projectsTitle}>Adicione um livro</h2>
         <form className={styles.form} onSubmit={handleCreateMessage}>
           <input 
             onChange={handleInputValueNome} 
@@ -121,6 +134,7 @@ export function Content() {
           {success && <p>Cadastro realizado com sucesso.</p>}
         </form>
       </div>
+
       <Footer />
     </>
   )
