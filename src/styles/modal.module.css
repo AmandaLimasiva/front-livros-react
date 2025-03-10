@@ -53,3 +53,43 @@
     padding: 20px;
     margin: 10px;
   }
+
+  .deleteButton {
+    background-color: rgb(180, 0, 0); /* Vermelho mais vibrante */
+    border: none;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.deleteButton:hover {
+    background-color: rgb(200, 50, 50); /* Tom mais claro ao passar o mouse */
+    transform: scale(1.05);
+}
+
+.deleteButton:active {
+    transform: scale(0.95);
+}
+
+.editButton {
+    background-color: rgb(0, 120, 0); /* Verde mais equilibrado */
+    border: none;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-bottom: 1em;
+    margin-top: 1em;
+}
+
+.editButton:hover {
+    background-color: rgb(0, 160, 0); /* Tom mais claro ao passar o mouse */
+    transform: scale(1.05);
+}
+
+.editButton:active {
+    transform: scale(0.95);
+}
