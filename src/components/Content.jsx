@@ -6,6 +6,11 @@ import { Modal } from './Modal.jsx';
 import Axios from 'axios';
 import styles from '../styles/content.module.css';
 
+
+//Barra de notificação controlo aqui
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
+
 export function Content() {
   const [repositories, setRepositories] = useState([]);
   const [nome, setNome] = useState('');
@@ -15,7 +20,7 @@ export function Content() {
   const [success, setSuccess] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedRepo, setSelectedRepo] = useState(null);
-  const baseURL = 'https://back-end-85oy.onrender.com/livros';
+  const baseURL = 'https://back-end-85oy.onrender.com/livros'; //Minha API
 
   //(GET)
   useEffect(() => {
@@ -55,8 +60,7 @@ export function Content() {
   // (POST)
   async function handleCreateMessage(event) {
     event.preventDefault();
-    console.log('Livro cadastrado com sucesso!', nome, quantPag, resenha, imagem);
-
+  
     try {
       await Axios.post(baseURL, {
         nome,
@@ -64,20 +68,39 @@ export function Content() {
         resenha,
         imagem
       });
-
+  
       const response = await Axios.get(baseURL);
       setRepositories(response.data);
-
+  
       setSuccess(true);
       setNome('');
       setQuantPag('');
       setImagem('');
       setResenha('');
+  
+      toast.success('Livro cadastrado com sucesso!', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "colored",
+      });
     } catch (error) {
-      console.error('Erro ao cadastrar:', error);
+      //console.error('Erro ao cadastrar:', error);
+      toast.error('Erro ao cadastrar o livro. Tente novamente!', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "colored",
+      });
     }
   }
-
+  
   // (PATCH)
   const handleEdit = async (repo) => {
     try {
@@ -148,7 +171,6 @@ export function Content() {
             className={styles.formTextArea}
           />
           <button className={styles.formButton} type="submit">Enviar</button>
-          {success && <p>Cadastro realizado com sucesso.</p>}
         </form>
       </div>
 
@@ -175,7 +197,7 @@ export function Content() {
           onDelete={handleDelete}
         />
       )}
-
+      <ToastContainer/>
       <Footer />
     </>
   );
