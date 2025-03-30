@@ -81,7 +81,7 @@ export function Content() {
       toast.success('Livro cadastrado com sucesso!', {
         position: "top-right",
         autoClose: 5000,
-        hideProgressBar: true,
+        hideProgressBar: false,
         closeOnClick: false,
         pauseOnHover: true,
         draggable: true,
@@ -92,7 +92,7 @@ export function Content() {
       toast.error('Erro ao cadastrar o livro. Tente novamente!', {
         position: "top-right",
         autoClose: 5000,
-        hideProgressBar: true,
+        hideProgressBar: false,
         closeOnClick: false,
         pauseOnHover: true,
         draggable: true,
@@ -123,14 +123,30 @@ export function Content() {
   // (DELETE)
   const handleDelete = async (bookId) => {
     try {
+      //Exclui o livro
       await Axios.delete(`${baseURL}/${bookId}`);
 
+      //Retorna os livros okay
       const response = await Axios.get(baseURL);
       setRepositories(response.data);
 
       setModalOpen(false); // Fecha o modal após a exclusão
+      //Notificação de sucesso 
+
+      toast.success('Livro excluído com sucesso!', {
+        position: "top-right",  // Posição da notificação
+        autoClose: 5000,  // Tempo de duração
+        hideProgressBar: false,  
+        theme: "colored",
+      });
     } catch (error) {
       console.error("Erro ao excluir livro:", error);
+      toast.error('Erro ao excluir o livro. Tente novamente!', {
+        position: "top-right",  // Posição da notificação
+        autoClose: 5000,  // Tempo de duração
+        hideProgressBar: false, 
+        theme: "colored",
+      });
     }
   };
 
