@@ -20,7 +20,13 @@ export function Content() {
   const [success, setSuccess] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedRepo, setSelectedRepo] = useState(null);
+  const [categoria, setCategoria] = useState(''); //campo novo
+
   const baseURL = 'https://back-end-85oy.onrender.com/livros'; //Minha API
+
+
+
+
 
   //(GET)
   useEffect(() => {
@@ -47,6 +53,11 @@ export function Content() {
     setResenha(event.target.value);
   }
 
+  function handleInputValueCategoria(event) {
+    setCategoria(event.target.value);
+  }
+
+  //Abrir e fechar Modal
   function openModal(repo) {
     setSelectedRepo(repo);
     setModalOpen(true);
@@ -61,12 +72,21 @@ export function Content() {
   async function handleCreateMessage(event) {
     event.preventDefault();
   
+    console.log('📦 Dados sendo enviados para o backend:', {
+    nome,
+    quantPag,
+    imagem,
+    resenha,
+    categoria
+    });
+
     try {
       await Axios.post(baseURL, {
         nome,
         quantPag,
         resenha,
-        imagem
+        imagem,
+        categoria //Campo novo
       });
   
       const response = await Axios.get(baseURL);
@@ -77,6 +97,8 @@ export function Content() {
       setQuantPag('');
       setImagem('');
       setResenha('');
+      setCategoria(''); //campo novo
+
   
       toast.success('Livro cadastrado com sucesso!', {
         position: "top-right",
@@ -109,6 +131,7 @@ export function Content() {
         quantPag: repo.quantPag,
         resenha: repo.resenha,
         imagem: repo.imagem,
+        categoria: repo.categoria //campo novo
       });
 
       const response = await Axios.get(baseURL);
@@ -162,6 +185,21 @@ export function Content() {
       <div>
         <h2 className={styles.projectsTitle}>Adicione um livro</h2>
         <form className={styles.form} onSubmit={handleCreateMessage}>
+
+          <select
+            onChange={(e) => setCategoria(e.target.value)}
+            value={categoria}
+            className={styles.formInput}
+          >
+            <option value="">Qual a categoria?</option>
+            <option value="Romance">Romance</option>
+            <option value="Ficção Científica">Ficção Científica</option>
+            <option value="Fantasia">Fantasia</option>
+            <option value="Biografia">Biografia</option>
+            <option value="Terror">Terror</option>
+            <option value="Outro">Outro</option>
+          </select>
+
           <input
             onChange={handleInputValueNome}
             placeholder="Digite o nome"
@@ -187,7 +225,9 @@ export function Content() {
             className={styles.formTextArea}
           />
           <button className={styles.formButton} type="submit">Enviar</button>
+
         </form>
+
       </div>
 
       <div className={styles.projectsContainer}>

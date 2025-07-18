@@ -22,7 +22,10 @@ export function Modal({ isOpen, onClose, repo, onEdit, onDelete }) {
           <h2>{repo.nome}</h2>
           <p>Páginas: {repo.quantPag}</p>
           <q>Sobre o Livro: {repo.resenha}</q>
+         <q>Categoria: {repo.categoria}</q>
         </div>
+
+
         {/* Botões de Editar e Excluir */}
         <div className={styles.modalActions}>  {/* Aqui é a classe para mexer no Css*/}
             <p>Ações</p>
