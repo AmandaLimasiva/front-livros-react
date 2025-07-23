@@ -1,4 +1,6 @@
+import { FiTrash } from 'react-icons/fi';
 import styles from '../styles/modal.module.css';
+
 
 export function Modal({ isOpen, onClose, repo, onEdit, onDelete }) {
   if (!isOpen) return null;
@@ -22,15 +24,18 @@ export function Modal({ isOpen, onClose, repo, onEdit, onDelete }) {
           <h2>{repo.nome}</h2>
           <p>Páginas: {repo.quantPag}</p>
           <q>Sobre o Livro: {repo.resenha}</q>
-         <q>Categoria: {repo.categoria}</q>
+          <q>Categoria: {repo.categoria}</q>
+          <q>Autores: {repo.autor || 'Não informado'}</q> {/*Campo autor no modal*/}
         </div>
 
 
         {/* Botões de Editar e Excluir */}
         <div className={styles.modalActions}>  {/* Aqui é a classe para mexer no Css*/}
             <p>Ações</p>
-            <button onClick={handleEdit} className={styles.editButton}>Editar</button>
-            <button onClick={handleDelete} className={styles.deleteButton}>Excluir</button>
+            <button onClick={handleEdit} className={styles.editButton}>Editar</button> 
+            <button onClick={handleDelete} className={styles.deleteButton}>
+              <FiTrash size={18} />
+            </button>
         </div>
         </div>  
       </div>

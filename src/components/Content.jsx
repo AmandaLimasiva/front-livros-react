@@ -20,23 +20,31 @@ export function Content() {
   const [success, setSuccess] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedRepo, setSelectedRepo] = useState(null);
-  const [categoria, setCategoria] = useState(''); //campo novo
+  //Campos novoss
+  const [categoria, setCategoria] = useState(''); 
+  const [autor, setAutor] = useState('');
 
-  const baseURL = 'https://back-end-85oy.onrender.com/livros'; //Minha API
 
-
+  //const baseURL = 'https://back-end-85oy.onrender.com/livros'; //Minha API
+  const baseURL = 'http://localhost:3333/livros';
 
 
 
   //(GET)
-  useEffect(() => {
-    async function getData() {
+ useEffect(() => {
+  async function getData() {
+    try {
       const response = await Axios.get(baseURL);
-      setRepositories(response.data);
+      setRepositories(response.data); 
+    } catch (error) {
+      console.error('Erro ao buscar os dados:', error);
     }
-    getData();
-  }, []);
+  }
+  getData();
+}, []);
 
+
+//Funções que controlo o input do forms
   function handleInputValueNome(event) {
     setNome(event.target.value);
   }
@@ -53,11 +61,12 @@ export function Content() {
     setResenha(event.target.value);
   }
 
-  function handleInputValueCategoria(event) {
-    setCategoria(event.target.value);
-  }
+  //Campos novos
 
-  //Abrir e fechar Modal
+  function handleInputValueAutor(event) {
+  setAutor(event.target.value);
+}
+
   function openModal(repo) {
     setSelectedRepo(repo);
     setModalOpen(true);
@@ -77,7 +86,9 @@ export function Content() {
     quantPag,
     imagem,
     resenha,
-    categoria
+    categoria,
+    autor // novo
+
     });
 
     try {
@@ -86,20 +97,24 @@ export function Content() {
         quantPag,
         resenha,
         imagem,
-        categoria //Campo novo
+        categoria, //Campo novo
+        autor // novo
+
       });
   
       const response = await Axios.get(baseURL);
       setRepositories(response.data);
-  
+
+      //Resetar o campo depois de enviar 
       setSuccess(true);
       setNome('');
       setQuantPag('');
       setImagem('');
       setResenha('');
       setCategoria(''); //campo novo
+      setAutor('') // novo
 
-  
+
       toast.success('Livro cadastrado com sucesso!', {
         position: "top-right",
         autoClose: 5000,
@@ -131,7 +146,8 @@ export function Content() {
         quantPag: repo.quantPag,
         resenha: repo.resenha,
         imagem: repo.imagem,
-        categoria: repo.categoria //campo novo
+        categoria: repo.categoria, //campo novo
+        autor: repo.autor 
       });
 
       const response = await Axios.get(baseURL);
@@ -191,7 +207,7 @@ export function Content() {
             value={categoria}
             className={styles.formInput}
           >
-            <option value="">Qual a categoria?</option>
+            <option value="">Qual o gênero??</option>
             <option value="Romance">Romance</option>
             <option value="Ficção Científica">Ficção Científica</option>
             <option value="Fantasia">Fantasia</option>
@@ -202,13 +218,22 @@ export function Content() {
 
           <input
             onChange={handleInputValueNome}
-            placeholder="Digite o nome"
+            placeholder="Qual o título?"
             value={nome}
             className={styles.formInput}
           />
+
+          <input
+            onChange={handleInputValueAutor}
+            placeholder="Quem é o autor?"
+            value={autor}
+            className={styles.formInput}
+          />
+
+          
           <input
             onChange={handleInputValueImagem}
-            placeholder="Digite o link da imagem"
+            placeholder="Adiciona a capa ;)"
             value={imagem}
             className={styles.formInput}
           />

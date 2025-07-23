@@ -172,3 +172,21 @@
 .formButton:hover {
   background-color: #4CA;
 }
+
+/*Meu cód*/
+
+.deleteButton {
+  background: none;
+  border: none;
+  color: #d9534f;
+  cursor: pointer;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s;
+}
+
+.deleteButton:hover {
+  transform: scale(1.1);
+}
