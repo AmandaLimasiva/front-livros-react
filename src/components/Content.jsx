@@ -23,6 +23,7 @@ export function Content() {
   //Campos novoss
   const [categoria, setCategoria] = useState(''); 
   const [autor, setAutor] = useState('');
+  const [status, setStatus] = useState('');
 
 
   //const baseURL = 'https://back-end-85oy.onrender.com/livros'; //Minha API
@@ -65,7 +66,11 @@ export function Content() {
 
   function handleInputValueAutor(event) {
   setAutor(event.target.value);
-}
+  }
+
+  function handleInputValuestatus(event) {
+  setStatus(event.target.value);
+  }
 
   function openModal(repo) {
     setSelectedRepo(repo);
@@ -87,7 +92,8 @@ export function Content() {
     imagem,
     resenha,
     categoria,
-    autor // novo
+    autor, 
+    status
 
     });
 
@@ -97,8 +103,9 @@ export function Content() {
         quantPag,
         resenha,
         imagem,
-        categoria, //Campo novo
-        autor // novo
+        categoria, 
+        autor,
+        status
 
       });
   
@@ -111,8 +118,9 @@ export function Content() {
       setQuantPag('');
       setImagem('');
       setResenha('');
-      setCategoria(''); //campo novo
-      setAutor('') // novo
+      setCategoria('');
+      setAutor('');
+      setStatus('');
 
 
       toast.success('Livro cadastrado com sucesso!', {
@@ -146,8 +154,9 @@ export function Content() {
         quantPag: repo.quantPag,
         resenha: repo.resenha,
         imagem: repo.imagem,
-        categoria: repo.categoria, //campo novo
-        autor: repo.autor 
+        categoria: repo.categoria, 
+        autor: repo.autor, 
+        status: repo.status 
       });
 
       const response = await Axios.get(baseURL);
@@ -230,7 +239,6 @@ export function Content() {
             className={styles.formInput}
           />
 
-          
           <input
             onChange={handleInputValueImagem}
             placeholder="Adiciona a capa ;)"
@@ -243,6 +251,19 @@ export function Content() {
             value={quantPag}
             className={styles.formInput}
           />
+
+          <select
+            onChange={handleInputValuestatus}
+            value={status}
+            className={styles.formInput}
+          >
+            <option value="">Qual o status da leitura?</option>
+            <option value="Quero ler">Quero ler</option>
+            <option value="Lendo">Lendo</option>
+            <option value="Lido">Lido</option>
+            <option value="Abandonado">Abandonado</option>
+          </select> 
+
           <textarea
             onChange={handleInputValueResenha}
             placeholder="Digite a resenha"
