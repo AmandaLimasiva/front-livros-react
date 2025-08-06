@@ -24,6 +24,10 @@ export function Content() {
   const [categoria, setCategoria] = useState(''); 
   const [autor, setAutor] = useState('');
   const [status, setStatus] = useState('');
+  const [dataInicio, setDataInicio] = useState('');
+  const [dataTermino, setDataTermino] = useState('');
+  const [notaLeitura, setNotaLeitura] = useState(0);
+
 
 
   //const baseURL = 'https://back-end-85oy.onrender.com/livros'; //Minha API
@@ -93,7 +97,10 @@ export function Content() {
     resenha,
     categoria,
     autor, 
-    status
+    status,
+    dataInicio,
+    dataTermino,
+    notaLeitura
 
     });
 
@@ -105,7 +112,10 @@ export function Content() {
         imagem,
         categoria, 
         autor,
-        status
+        status,
+        dataInicio,
+        dataTermino,
+        notaLeitura
 
       });
   
@@ -121,6 +131,9 @@ export function Content() {
       setCategoria('');
       setAutor('');
       setStatus('');
+      setDataInicio('');
+      setDataTermino('');
+      setNotaLeitura(0); 
 
 
       toast.success('Livro cadastrado com sucesso!', {
@@ -270,7 +283,48 @@ export function Content() {
             value={resenha}
             className={styles.formTextArea}
           />
-          <button className={styles.formButton} type="submit">Enviar</button>
+
+        <div className={styles.dateInputs}>
+          <label>
+            Início da leitura:
+            <input
+              type="date"
+              value={dataInicio}
+              onChange={(e) => setDataInicio(e.target.value)}
+              className={styles.formInput}
+            />
+          </label>
+
+          <label>
+            Término da leitura:
+            <input
+              type="date"
+              value={dataTermino}
+              onChange={(e) => setDataTermino(e.target.value)}
+              className={styles.formInput}
+            />
+          </label>
+        </div>
+
+        <div className={styles.ratingContainer}>
+          <p>Quanto você gostou da leitura?</p>
+          {[1, 2, 3, 4, 5].map((nota) => (
+            <span
+              key={nota}
+              onClick={() => setNotaLeitura(nota)}
+              style={{
+                cursor: 'pointer',
+                fontSize: '24px',
+                color: notaLeitura >= nota ? 'red' : 'gray',
+              }}
+            >
+              ❤️
+            </span>
+          ))}
+        </div>
+
+
+        <button className={styles.formButton} type="submit">Enviar</button>
 
         </form>
 

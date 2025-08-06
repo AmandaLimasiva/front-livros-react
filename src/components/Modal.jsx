@@ -27,6 +27,10 @@ export function Modal({ isOpen, onClose, repo, onEdit, onDelete }) {
           <q>Categoria: {repo.categoria}</q>
           <q>Autores: {repo.autor || 'Não informado'}</q> {/*Campo autor no modal*/}
            <q>Status: {repo.status || 'Não informado'}</q> 
+           <q>Data de Inicio: {repo.dataInicio || 'Não informado'}</q> 
+           <q>Data de Término: {repo.dataTermino || 'Não informado'}</q> 
+           <q>Notas {repo.notaLeitura || 'Não informado'}</q> 
+
         </div>
 
 
