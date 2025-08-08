@@ -142,6 +142,16 @@
   border-radius: 4px;
   resize: vertical;
   margin-bottom: 1rem;
+  margin: 5px;
+}
+
+.dateInputs{
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  width: 42%;
+  margin: 5px;
+  
 }
 
 .formTextArea {
@@ -155,7 +165,7 @@
 
 
 .formButton {
-  background-color: #4CAF50;
+  background-color: #4CAF50; /*MUDARERRRRRRRRr*/
   border: none;
   color: white;
   padding: 12px 32px;

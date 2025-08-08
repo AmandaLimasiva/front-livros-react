@@ -48,3 +48,5 @@ export function Modal({ isOpen, onClose, repo, onEdit, onDelete }) {
 
   );
 }
+
+//Ajustar então avaliação :)
