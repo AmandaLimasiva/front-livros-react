@@ -5,6 +5,7 @@ import { Footer } from './Footer.jsx';
 import { Modal } from './Modal.jsx';
 import Axios from 'axios';
 import styles from '../styles/content.module.css';
+import minhaImagem from '../assets/cap.jpg';
 
 
 //Barra de notificação controlo aqui
@@ -219,117 +220,129 @@ export function Content() {
         image={listaImg} // Se precisar alterar, faça aqui
       />
 
-      {/* Formulário de Cadastro */}
-      <div>
-        <h2 className={styles.projectsTitle}>Adicione um livro</h2>
-        <form className={styles.form} onSubmit={handleCreateMessage}>
-
-          <select
-            onChange={(e) => setCategoria(e.target.value)}
-            value={categoria}
-            className={styles.formInput}
-          >
-            <option value="">Qual o gênero??</option>
-            <option value="Romance">Romance</option>
-            <option value="Ficção Científica">Ficção Científica</option>
-            <option value="Fantasia">Fantasia</option>
-            <option value="Biografia">Biografia</option>
-            <option value="Terror">Terror</option>
-            <option value="Outro">Outro</option>
-          </select>
-
-          <input
-            onChange={handleInputValueNome}
-            placeholder="Qual o título?"
-            value={nome}
-            className={styles.formInput}
-          />
-
-          <input
-            onChange={handleInputValueAutor}
-            placeholder="Quem é o autor?"
-            value={autor}
-            className={styles.formInput}
-          />
-
-          <input
-            onChange={handleInputValueImagem}
-            placeholder="Adiciona a capa ;)"
-            value={imagem}
-            className={styles.formInput}
-          />
-          <input
-            onChange={handleInputValueQuantPag}
-            placeholder="Digite a quantidade de páginas"
-            value={quantPag}
-            className={styles.formInput}
-          />
-
-          <select
-            onChange={handleInputValuestatus}
-            value={status}
-            className={styles.formInput}
-          >
-            <option value="">Qual o status da leitura?</option>
-            <option value="Quero ler">Quero ler</option>
-            <option value="Lendo">Lendo</option>
-            <option value="Lido">Lido</option>
-            <option value="Abandonado">Abandonado</option>
-          </select> 
-
-          <textarea
-            onChange={handleInputValueResenha}
-            placeholder="Digite a resenha"
-            value={resenha}
-            className={styles.formTextArea}
-          />
-
-        <div className={styles.dateInputs}>
-          <label>
-            Início da leitura:
-            <input
-              type="date"
-              value={dataInicio}
-              onChange={(e) => setDataInicio(e.target.value)}
-              className={styles.formInput}
-            />
-          </label>
-
-          <label>
-            Término da leitura:
-            <input
-              type="date"
-              value={dataTermino}
-              onChange={(e) => setDataTermino(e.target.value)}
-              className={styles.formInput}
-            />
-          </label>
+    
+    {/* Container Pai que coloca tudo lado a lado */}
+      <div className={styles.ladoALado}>
+        
+        {/* Imagem */}
+        <div className={styles.containerLadoALado}>
+          <img src={minhaImagem} alt="Livro" />
         </div>
 
-        <div className={styles.ratingContainer}>
-          <p>Quanto você gostou da leitura?</p>
-          {[1, 2, 3, 4, 5].map((nota) => (
-            <span
-              key={nota}
-              onClick={() => setNotaLeitura(nota)}
-              style={{
-                cursor: 'pointer',
-                fontSize: '24px',
-                color: notaLeitura >= nota ? 'red' : 'gray',
-              }}
+        {/* Formulário */}
+        <div className={styles.formulario_principal}>
+          <h2 className={styles.projectsTitle}>Adicione um livro</h2>
+          <form className={styles.form} onSubmit={handleCreateMessage}>
+
+            <select
+              onChange={(e) => setCategoria(e.target.value)}
+              value={categoria}
+              className={styles.formInput}
             >
-              ❤️
-            </span>
-          ))}
+              <option value="">Qual o gênero??</option>
+              <option value="Romance">Romance</option>
+              <option value="Ficção Científica">Ficção Científica</option>
+              <option value="Fantasia">Fantasia</option>
+              <option value="Biografia">Biografia</option>
+              <option value="Terror">Terror</option>
+              <option value="Outro">Outro</option>
+            </select>
+
+            <input
+              onChange={handleInputValueNome}
+              placeholder="Qual o título?"
+              value={nome}
+              className={styles.formInput}
+            />
+
+            <input
+              onChange={handleInputValueAutor}
+              placeholder="Quem é o autor?"
+              value={autor}
+              className={styles.formInput}
+            />
+
+            <input
+              onChange={handleInputValueImagem}
+              placeholder="Adiciona a capa ;)"
+              value={imagem}
+              className={styles.formInput}
+            />
+
+            <input
+              onChange={handleInputValueQuantPag}
+              placeholder="Digite a quantidade de páginas"
+              value={quantPag}
+              className={styles.formInput}
+            />
+
+            <select
+              onChange={handleInputValuestatus}
+              value={status}
+              className={styles.formInput}
+            >
+              <option value="">Qual o status da leitura?</option>
+              <option value="Quero ler">Quero ler</option>
+              <option value="Lendo">Lendo</option>
+              <option value="Lido">Lido</option>
+              <option value="Abandonado">Abandonado</option>
+            </select> 
+
+            <textarea
+              onChange={handleInputValueResenha}
+              placeholder="Digite a resenha"
+              value={resenha}
+              className={styles.formTextArea}
+            />
+
+            <div className={styles.dateInputs}>
+              <label>
+                Início da leitura:
+                <input
+                  type="date"
+                  value={dataInicio}
+                  onChange={(e) => setDataInicio(e.target.value)}
+                  className={styles.formInput}
+                />
+              </label>
+
+              <label>
+                Término da leitura:
+                <input
+                  type="date"
+                  value={dataTermino}
+                  onChange={(e) => setDataTermino(e.target.value)}
+                  className={styles.formInput}
+                />
+              </label>
+            </div>
+
+            <div className={styles.ratingContainer}>
+              <p>Quanto você gostou da leitura?</p>
+              {[1, 2, 3, 4, 5].map((nota) => (
+                <span
+                  key={nota}
+                  onClick={() => setNotaLeitura(nota)}
+                  style={{
+                    cursor: 'pointer',
+                    fontSize: '24px',
+                    color: notaLeitura >= nota ? 'red' : 'gray',
+                  }}
+                >
+                  ❤️
+                </span>
+              ))}
+            </div>
+
+            <button className={styles.formButton} type="submit">Enviar</button>
+
+          </form>
         </div>
-
-
-        <button className={styles.formButton} type="submit">Enviar</button>
-
-        </form>
-
       </div>
 
+
+
+          {/*Aqui é onde exibi os livros depois de cadastrados*/}
       <div className={styles.projectsContainer}>
         <div className={styles.cardsRepoContainer}>
           {repositories.map((repo) => (
